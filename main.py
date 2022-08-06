@@ -33,7 +33,7 @@ def play_wordle():
     guess_history["Guess 1"] = inputFromUser
     print("Target word: " + target_word)
     print(generate_df(guess_history))
-    #print(df)
+    # print(df)
 
 
 def get_input(list_of_words):
@@ -54,4 +54,11 @@ def generate_df(my_dict):
     return df
 
 
+def loop():
+    for i in range(0, 6):
+        print(i)
+
+    print("hello world")
+
 play_wordle()
+loop()
