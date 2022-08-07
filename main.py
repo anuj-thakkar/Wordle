@@ -22,18 +22,32 @@ def get_list_of_words(input_file):
 
 def play_wordle():
     list_of_words = get_list_of_words("wordle-answers-alphabetical.txt")
-    target_word = random.choice(list_of_words)
+    target_word = random.choice(list_of_words).upper()
+    print("Target word: " + target_word)
+    print(list(target_word))
     none_list = [None, None, None, None, None]
     guess_history = {"Guess 1": none_list, "Guess 2": none_list, "Guess 3": none_list,
                      "Guess 4": none_list, "Guess 5": none_list, "Guess 6": none_list}
 
-    inputFromUser = get_input(list_of_words)
-    print(inputFromUser)
+    gameFinished = False
 
-    guess_history["Guess 1"] = inputFromUser
-    print("Target word: " + target_word)
-    print(generate_df(guess_history))
-    # print(df)
+    while not gameFinished:
+
+        for i in guess_history:
+            inputFromUser = get_input(list_of_words)
+
+            # first check if the input guess is correct
+            if inputFromUser == list(target_word):
+                print("Correct guess")
+                guess_history[i] = inputFromUser
+                print(generate_df(guess_history))
+                gameFinished = True
+                break
+
+            else:
+                print("(partially) incorrect guess")
+                guess_history[i] = inputFromUser
+                print(generate_df(guess_history))
 
 
 def get_input(list_of_words):
@@ -54,11 +68,4 @@ def generate_df(my_dict):
     return df
 
 
-def loop():
-    for i in range(0, 6):
-        print(i)
-
-    print("hello world")
-
 play_wordle()
-loop()
