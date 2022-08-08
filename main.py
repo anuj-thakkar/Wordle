@@ -65,22 +65,8 @@ def play_wordle():
         guess_count = guess_count + 1
         print("Guess: " + str(guess_count))
         inputFromUser = get_input(list_of_words)  # type <list>
-        guess = ''.join(inputFromUser).upper()
 
-
-        # Append the valid guess
-        history_guesses.append(guess)
-        # Validate the guess
-        guessed, pattern = validate_guess(guess, target_word)
-        # Append the results
-        colored_guessed.append(guessed)
-        tiles_patterns.append(pattern)
-
-        # For each result (also the previous ones), it'll print the colored guesses and the tile pattern
-        for g, p in zip(colored_guessed, tiles_patterns):
-            print(g, end=' ')
-            print(p)
-        print()
+        color_map(inputFromUser, history_guesses, target_word, colored_guessed, tiles_patterns)
 
         if guess_count == 6:
 
@@ -139,5 +125,21 @@ def generate_df(my_dict):
     df = pd.DataFrame(data=my_dict).transpose()
     return df
 
+def color_map(inputFromUser, history_guesses, target_word, colored_guessed, tiles_patterns):
+    guess = ''.join(inputFromUser).upper()
+
+    # Append the valid guess
+    history_guesses.append(guess)
+    # Validate the guess
+    guessed, pattern = validate_guess(guess, target_word)
+    # Append the results
+    colored_guessed.append(guessed)
+    tiles_patterns.append(pattern)
+
+    # For each result (also the previous ones), it'll print the colored guesses and the tile pattern
+    for g, p in zip(colored_guessed, tiles_patterns):
+        print(g, end=' ')
+        print(p)
+    print()
 
 play_wordle()
