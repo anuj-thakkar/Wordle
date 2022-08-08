@@ -1,16 +1,7 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 import pandas as pd
 import random
 
-
-# import Numpy as np
-
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
 def get_list_of_words(input_file):
     list = []
@@ -25,28 +16,39 @@ def play_wordle():
     target_word = random.choice(list_of_words).upper()
     print("Target word: " + target_word)
     print(list(target_word))
+    print()
     none_list = [None, None, None, None, None]
     guess_history = {"Guess 1": none_list, "Guess 2": none_list, "Guess 3": none_list,
                      "Guess 4": none_list, "Guess 5": none_list, "Guess 6": none_list}
 
-    gameFinished = False
+    guess_count = 0
+    while guess_count < 6:
 
-    while not gameFinished:
+        guess_count = guess_count + 1
+        print("Guess: " + str(guess_count))
+        inputFromUser = get_input(list_of_words)
 
-        for i in guess_history:
-            inputFromUser = get_input(list_of_words)
+        if guess_count == 6:
+            print("Guess count: " + str(guess_count))
+            guess_history["Guess " + str(guess_count)] = inputFromUser
+            print(generate_df(guess_history))
+            break
+        else:
 
-            # first check if the input guess is correct
+            # first check
+            # if the input guess is correct
             if inputFromUser == list(target_word):
                 print("Correct guess")
-                guess_history[i] = inputFromUser
+                guess_history["Guess " + str(guess_count)] = inputFromUser
                 print(generate_df(guess_history))
-                gameFinished = True
-                break
-
+                guess_count = 6
+            elif inputFromUser in guess_history.values():
+                print(''.join(inputFromUser))
+                print("word already used")
+                guess_count = guess_count - 1
             else:
                 print("(partially) incorrect guess")
-                guess_history[i] = inputFromUser
+                guess_history["Guess " + str(guess_count)] = inputFromUser
                 print(generate_df(guess_history))
 
 
